@@ -3,33 +3,31 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var mongoose = require('mongoose');
+var winston = require('winston');
 
-//var db_function = require('db_helper');
-// Connection URL
-var db = mongoose.connect('mongodb://localhost:27017/node_chat');
-io.on('connection', function(socket){
-    console.log('a user connected');
-});
-
-var app = require('express')();
-var http = require('http').Server(app);
-
-
-
-app.get('/', function(req, res){
-    res.send('<h1>Hello world</h1>');
-});
+var config = require('./libs/config'); // Используемая конфигурация
+var db = require('./libs/mongoose'); // Файл работы с базой MongoDB
 
 http.listen(3000, function(){
-    console.log('listening on *:3000');
+    winston.info('listening on *:3000');
 });
-var Cat = mongoose.model('Cat', { name: String });
 
-var kitty = new Cat({ name: 'Zildjian' });
-//kitty.save(function (err) {
-//    if (err) // ...
-//        console.log('meow');
-//});
+
+
+
+
+// Connection URL
+io.on('connection', function(socket){
+    console.log('a user connected');
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
+});
+
+
+//Test git
+app.get('/', function(req, res){
+    res.send('<h1>Воу Воу. Палехче!!</h1>');
+});
 
 
