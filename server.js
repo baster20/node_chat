@@ -23,6 +23,8 @@ http.listen(3000, function(){
 // Connection URL
 io.on('connection', function(socket){
     console.log('a user connected');
+//add room
+
 
     socket.on('chat message', function(msg){
         io.emit('chat message', msg);
